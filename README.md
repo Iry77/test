@@ -1,108 +1,110 @@
 # Iry RABEHAJA — Portfolio
 
-A bilingual (EN / FR), theme-aware, accessible personal portfolio built with **React 18 + TypeScript (strict)**, **Vite 6**, **Tailwind CSS 3**, **Framer Motion 11** and **Lucide React**.
+> 🇬🇧 English version: [README.en.md](./README.en.md)
 
-## Features
+Portfolio personnel bilingue (FR / EN), compatible thème clair/sombre et accessible, construit avec **React 18 + TypeScript (mode strict)**, **Vite 6**, **Tailwind CSS 3**, **Framer Motion 11** et **Lucide React**.
 
-- **Right-hand navigation rail** (desktop ≥ 1024 px): floating pill with icon links, hover/focus labels, and an animated active indicator driven by an `IntersectionObserver` scroll spy.
-- **Mobile / tablet drawer**: a floating action button opens a right-side slide-over modal with a focus trap, `Escape` to close, scroll lock and focus restore.
-- **Theme engine**: follows `prefers-color-scheme` live. A manual override cycles *System → Light → Dark* and is saved in `localStorage`. An inline script in `index.html` applies the theme before first paint, so there is no flash of the wrong theme.
-- **Bilingual EN / FR**: all copy lives in typed dictionaries (`src/i18n/locales/en.ts`, `fr.ts`). A missing key in either locale is a compile error. `<html lang>`, `<title>` and the meta description update when the language changes, and dates are formatted with `Intl`.
-- **Motion**: scroll reveals, staggered grids, a self-drawing timeline and micro-interactions. `<MotionConfig reducedMotion="user">` plus a CSS fallback respect `prefers-reduced-motion`.
-- **Accessibility**: skip link, landmark sections with `aria-labelledby`, `aria-current` on the active nav item, visible focus rings, and screen-reader labels on icon buttons. Colour tokens are checked against WCAG AA (ratios are listed in `src/index.css`).
-- **Resilient media**: images that are missing or fail to load fall back to designed placeholders, so the site never shows a broken-image icon.
+## Fonctionnalités
 
-## File tree
+- **Barre de navigation à droite** (ordinateur, ≥ 1024 px) : une pilule flottante avec des liens en icônes, un libellé au survol ou au focus clavier, et un indicateur animé qui suit la section affichée (détection par `IntersectionObserver`).
+- **Tiroir de navigation mobile / tablette** : un bouton flottant ouvre un panneau latéral à droite. Le focus clavier y reste piégé, `Échap` le ferme, le défilement de la page est bloqué et le focus revient au bouton à la fermeture.
+- **Thème clair / sombre** : suit `prefers-color-scheme` en direct. Le bouton de thème alterne *Système → Clair → Sombre* et le choix est enregistré dans `localStorage`. Un script dans `index.html` applique le thème avant le premier affichage : aucun flash du mauvais thème.
+- **Bilingue FR / EN** : tous les textes sont dans des dictionnaires typés (`src/i18n/locales/fr.ts`, `en.ts`). Une clé manquante dans une langue est une erreur de compilation. Changer de langue met aussi à jour `<html lang>`, le `<title>`, la meta description et le format des dates (`Intl`).
+- **Animations** : apparitions au défilement, grilles en cascade, frise chronologique qui se dessine et micro-interactions. `<MotionConfig reducedMotion="user">` et une règle CSS respectent `prefers-reduced-motion`.
+- **Accessibilité** : lien d'évitement, sections balisées avec `aria-labelledby`, `aria-current` sur l'élément de navigation actif, anneaux de focus visibles et libellés pour lecteurs d'écran sur les boutons-icônes. Les couleurs respectent le niveau WCAG AA (ratios indiqués dans `src/index.css`).
+- **Images robustes** : une image absente ou qui ne se charge pas est remplacée par un visuel de substitution, jamais par une icône d'image cassée.
+
+## Arborescence
 
 ```
 .
-├── index.html                  # Meta tags + no-flash theme/locale bootstrap script
+├── index.html                  # Balises meta + script d'initialisation thème/langue
 ├── package.json
-├── tailwind.config.ts          # Colour tokens mapped to CSS variables
+├── tailwind.config.ts          # Couleurs reliées aux variables CSS
 ├── postcss.config.js
 ├── tsconfig.json / tsconfig.app.json / tsconfig.node.json
-├── vite.config.ts              # `@/` alias, vendor chunk splitting
+├── vite.config.ts              # Alias `@/`, découpage des bundles
 ├── public/
 │   ├── favicon.svg, logo.svg
 │   ├── images/profile.{webp,jpg}
-│   └── icons/tech/*.svg        # Devicon SVGs (MIT, see LICENSE-devicon.txt)
+│   └── icons/tech/*.svg        # Icônes Devicon (MIT, voir LICENSE-devicon.txt)
 └── src/
-    ├── main.tsx                # Providers + root
-    ├── App.tsx                 # Page composition + scroll spy + MotionConfig
-    ├── index.css               # Design tokens (light/dark), base + component layers
-    ├── types/portfolio.ts      # Domain model, id unions (SectionId, TechId, …)
-    ├── data/portfolioData.ts   # Language-agnostic profile data (single source of truth)
+    ├── main.tsx                # Providers + racine
+    ├── App.tsx                 # Composition de la page, détection de section, MotionConfig
+    ├── index.css               # Variables de couleur (clair/sombre), styles de base et composants
+    ├── types/portfolio.ts      # Modèle de données, identifiants (SectionId, TechId, …)
+    ├── data/portfolioData.ts   # Données indépendantes de la langue (source unique)
     ├── i18n/
-    │   ├── types.ts            # Dictionary interface, Locale type
+    │   ├── types.ts            # Interface Dictionary, type Locale
     │   ├── locales/en.ts, fr.ts
     │   ├── dictionaries.ts
     │   ├── LanguageContext.ts, LanguageProvider.tsx, useTranslation.ts
     ├── theme/
     │   ├── ThemeContext.ts, ThemeProvider.tsx, useTheme.ts
     ├── hooks/                  # useScrollSpy, usePortfolio, useCopyToClipboard
-    ├── lib/                    # cn, dates (Intl formatting + status), motion presets, safe storage
+    ├── lib/                    # cn, dates (format Intl + statut), animations, stockage sécurisé
     └── components/
         ├── layout/             # SideNav, MobileNav, Header, Footer, SkipLink, navItems
-        ├── ui/                 # Section, Reveal, TechBadge, SmartImage, Theme/Language toggles, BrandIcons
+        ├── ui/                 # Section, Reveal, TechBadge, SmartImage, boutons thème/langue, BrandIcons
         └── sections/           # Hero, About, Skills, Experience, Education, Projects, Interests, Contact
 ```
 
-### How content is organised
+### Organisation du contenu
 
-| What | Where |
+| Quoi | Où |
 | --- | --- |
-| Links, dates, tech stacks, image paths, contact details | `src/data/portfolioData.ts` |
-| Every human-readable string (UI + profile text) | `src/i18n/locales/{en,fr}.ts` |
-| Ids that connect the two (`ExperienceId`, `ProjectId`, …) | `src/types/portfolio.ts` |
+| Liens, dates, technologies, chemins d'images, coordonnées | `src/data/portfolioData.ts` |
+| Tous les textes lisibles (interface + profil) | `src/i18n/locales/{fr,en}.ts` |
+| Identifiants qui relient les deux (`ExperienceId`, `ProjectId`, …) | `src/types/portfolio.ts` |
 
-To add a project: add an id to `ProjectId`, add an entry to `portfolioData.projects`, then add its `name`/`description` to **both** locale files. TypeScript reports anything you forget.
+Pour ajouter un projet : ajoutez un identifiant à `ProjectId`, une entrée dans `portfolioData.projects`, puis son `name` et sa `description` dans **les deux** fichiers de langue. TypeScript signale tout oubli.
 
-## Setup
+## Installation
 
-### Prerequisites
+### Prérequis
 
-- **Node.js ≥ 20.19** (22 LTS recommended; `.nvmrc` is provided, so `nvm use` works)
-- **npm ≥ 10** (bundled with Node)
+- **Node.js ≥ 20.19** (22 LTS recommandé ; un fichier `.nvmrc` est fourni, donc `nvm use` fonctionne)
+- **npm ≥ 10** (installé avec Node)
 
-### Install and run
+### Installer et lancer
 
 ```bash
-npm install          # install dependencies
-npm run dev          # http://localhost:5173 with hot reload
+npm install          # installe les dépendances
+npm run dev          # http://localhost:5173 avec rechargement à chaud
 ```
 
-### Quality gates and production build
+### Vérifications et build de production
 
 ```bash
-npm run typecheck    # strict TypeScript, no emit
-npm run build        # type-check + optimised bundle in dist/
-npm run preview      # serve dist/ at http://localhost:4173 to validate the build
+npm run typecheck    # TypeScript strict, sans génération de fichiers
+npm run build        # vérification des types + bundle optimisé dans dist/
+npm run preview      # sert dist/ sur http://localhost:4173 pour valider le build
 ```
 
-Before deploying, check these in `npm run preview`:
+Avant de déployer, vérifiez dans `npm run preview` :
 
-1. Toggle the theme to *Light* or *Dark* and reload: the choice persists with no flash.
-2. Switch EN/FR: all text, dates, `<title>` and `<html lang>` update.
-3. Turn on "Reduce motion" in the OS: content appears without sliding.
-4. Narrow the window below 1024 px: the right rail is replaced by the menu button and drawer.
-5. Run a Lighthouse audit in Chrome DevTools (Accessibility and Best Practices).
+1. Passez le thème en *Clair* ou *Sombre* puis rechargez : le choix est conservé, sans flash.
+2. Basculez FR/EN : les textes, les dates, le `<title>` et `<html lang>` changent.
+3. Activez « Réduire les animations » dans le système : le contenu apparaît sans glisser.
+4. Réduisez la fenêtre sous 1024 px : la barre de droite est remplacée par le bouton menu et le tiroir.
+5. Lancez un audit Lighthouse dans les DevTools de Chrome (Accessibilité et Bonnes pratiques).
 
-### Deploy
+### Déploiement
 
-`dist/` is a static site that can be hosted anywhere:
+`dist/` est un site statique, hébergeable n'importe où :
 
-- **Vercel / Netlify**: framework preset "Vite", build command `npm run build`, output directory `dist`.
-- **GitHub Pages**: if the site is served from a sub-path (`https://<user>.github.io/<repo>/`), set `base: '/<repo>/'` in `vite.config.ts`, then publish `dist/`.
+- **Vercel / Netlify** : préréglage « Vite », commande de build `npm run build`, dossier de sortie `dist`.
+- **GitHub Pages** : si le site est servi depuis un sous-chemin (`https://<utilisateur>.github.io/<repo>/`), ajoutez `base: '/<repo>/'` dans `vite.config.ts`, puis publiez `dist/`.
 
-## Adding your own images
+## Ajouter vos images
 
-The data already references these files. Drop them into `public/images/` and they appear automatically; until then, placeholders are shown.
+Les données font déjà référence à ces fichiers. Déposez-les dans `public/images/` et ils s'afficheront automatiquement ; d'ici là, des visuels de substitution sont affichés.
 
-| File | Used for |
+| Fichier | Utilisé pour |
 | --- | --- |
-| `logo_iecd.png` | Experience entries |
-| `esiea.jpg`, `upsaclay_iut_orsay.jpg`, `apeaf.jpeg` | Education card banners |
-| `MATH.png`, `JO2024.png` | Project thumbnails |
-| `piano.jpg`, `guitare.jpg`, `football.jpg`, `basket.jpg`, `echecs.jpg`, `kaguya-sama-love-is-war.jpg`, `konosuba.jpg`, `Naruto.jpg`, `genshin-impact.webp`, `inazuma-eleven.jpg` | Interest cards (hover backdrop) |
+| `logo_iecd.png` | Expériences |
+| `esiea.jpg`, `upsaclay_iut_orsay.jpg`, `apeaf.jpeg` | Bannières des cartes Formation |
+| `MATH.png`, `JO2024.png` | Vignettes des projets |
+| `piano.jpg`, `guitare.jpg`, `football.jpg`, `basket.jpg`, `echecs.jpg`, `kaguya-sama-love-is-war.jpg`, `konosuba.jpg`, `Naruto.jpg`, `genshin-impact.webp`, `inazuma-eleven.jpg` | Cartes Centres d'intérêt (fond au survol) |
 
-Excel, Access, Power BI, SPARQL and SQL/Oracle use monogram badges. To use a logo instead, add an SVG to `public/icons/tech/` and set its `icon` field in `portfolioData.ts`.
+Excel, Access, Power BI, SPARQL et SQL/Oracle utilisent des badges à initiales. Pour afficher un logo à la place, ajoutez un SVG dans `public/icons/tech/` et renseignez son champ `icon` dans `portfolioData.ts`.
