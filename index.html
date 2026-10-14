@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Iry RABEHAJA — Software Engineering Student</title>
+    <meta
+      name="description"
+      content="Portfolio of Iry RABEHAJA, software engineering apprentice at ESIEA — data engineering, application development and analytics."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#fafafc" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0c14" media="(prefers-color-scheme: dark)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Iry RABEHAJA — Portfolio" />
+    <meta property="og:description" content="Software engineering apprentice at ESIEA — data, development, analytics." />
+    <meta property="og:image" content="/images/profile.jpg" />
+    <link rel="preload" as="image" href="/images/profile.webp" type="image/webp" />
+    <!--
+      Resolve theme + language before first paint to avoid a flash of the wrong theme.
+      Keys must match src/theme/ThemeProvider.tsx and src/i18n/LanguageProvider.tsx.
+    -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('portfolio:theme');
+          var system = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          var theme = stored === 'light' || stored === 'dark' ? stored : system;
+          document.documentElement.classList.toggle('dark', theme === 'dark');
+          document.documentElement.style.colorScheme = theme;
+          var lang = localStorage.getItem('portfolio:locale');
+          if (lang !== 'en' && lang !== 'fr') {
+            lang = (navigator.language || 'en').toLowerCase().indexOf('fr') === 0 ? 'fr' : 'en';
+          }
+          document.documentElement.lang = lang;
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <noscript>This portfolio needs JavaScript enabled. / Ce portfolio nécessite JavaScript.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
